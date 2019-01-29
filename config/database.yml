@@ -21,10 +21,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  adatpter: postgresql
+  adapter: postgresql
   encoding: unicode
-  database: black_book_production
-  pool: 5
-  timeout: 5000
+  host: db
   username: postgres
   password:
+  pool: 5
+  database: black_book_production
