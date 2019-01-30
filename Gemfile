@@ -74,3 +74,7 @@ gem 'bootstrap-will_paginate'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# React
+gem 'webpacker'
+gem 'react-rails'
