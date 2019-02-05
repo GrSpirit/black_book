@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bank:</strong>
+  <%= @deposit.bank %>
+</p>
+
+<p>
+  <strong>Date start:</strong>
+  <%= @deposit.date_start %>
+</p>
+
+<p>
+  <strong>Date end:</strong>
+  <%= @deposit.date_end %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @deposit.amount %>
+</p>
+
+<p>
+  <strong>Percent:</strong>
+  <%= @deposit.percent %>
+</p>
+
+<%= link_to 'Edit', edit_deposit_path(@deposit) %> |
+<%= link_to 'Back', deposits_path %>

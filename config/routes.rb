@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :deposits
   root  'sessions#new'
 
   # Users
