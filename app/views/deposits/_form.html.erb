@@ -11,29 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :bank %>
-    <%= form.text_field :bank %>
+  <div class="field form-group row">
+    <%= form.label :bank, class: "col-form-label col-sm-2" %>
+    <div class="col-sm-6">
+      <%= form.text_field :bank, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :date_start %>
-    <%= form.date_select :date_start %>
+  <div class="field form-group row">
+    <%= form.label :date_start, class: "col-form-label col-sm-2" %>
+    <div class="col-sm-6">
+      <%= form.date_select :date_start, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :date_end %>
-    <%= form.date_select :date_end %>
+  <div class="field form-group row">
+    <%= form.label :date_end, class: "col-form-label col-sm-2" %>
+    <div class="col-sm-6">
+      <%= form.date_select :date_end, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount %>
+  <div class="field form-group row">
+    <%= form.label :amount, class: "col-form-label col-sm-2" %>
+    <div class="col-sm-6">
+      <%= form.text_field :amount, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :percent %>
-    <%= form.text_field :percent %>
+  <div class="field form-group row">
+    <%= form.label :percent, class: "col-form-label col-sm-2" %>
+    <div class="col-sm-6">
+      <%= form.text_field :percent, class: "form-control" %>
+    </div>
   </div>
 
   <div class="actions">

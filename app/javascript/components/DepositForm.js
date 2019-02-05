@@ -34,7 +34,7 @@ class DepositForm extends React.Component {
 
   render () {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div className="form-group row">
           <label className="field col-form-label col-sm-2" htmlFor="deposit_bank">Bank</label>
           <div className="col-sm-6">
