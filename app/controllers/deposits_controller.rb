@@ -1,5 +1,6 @@
 class DepositsController < ApplicationController
   before_action :set_deposit, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
 
   # GET /deposits
   # GET /deposits.json
@@ -70,5 +71,13 @@ class DepositsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def deposit_params
       params.require(:deposit).permit(:bank, :date_start, :date_end, :amount, :percent)
+    end
+
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
     end
 end
