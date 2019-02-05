@@ -1,8 +1,20 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import "~bootstrap/dist/css/bootstrap";
 
 /* universal */
 $gray-medium-light: #eaeaea;
+$state-danger-text: #a94442;
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
+
 body {
     padding-top: 60px;
 }
@@ -135,14 +147,6 @@ aside {
     }
 }
 
-.gravatar {
-    float: left;
-    margin-right: 10px;
-}
-
-.gravatar_edit {
-    margin-top: 15px;
-}
 
 /* forms */
 input, textarea, select, .uneditable-input {
@@ -165,7 +169,7 @@ input {
 }
 
 .field_with_errors {
-    @extend .has-error;
+    //@extend .has-error;
     .form-control {
         color: $state-danger-text;
     }
