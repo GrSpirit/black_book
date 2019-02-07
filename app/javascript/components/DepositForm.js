@@ -6,9 +6,10 @@ import update from 'immutability-helper'
 class DepositForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.deposit.date_start);
     this.state = {
-      url: '',
-      edit: props.edit == null ? false : props.edit,
+      id: props.deposit.id,
+      edit: props.edit == true,
       deposit: props.deposit == null ? {
         bank: '',
         date_start: new Date(),
@@ -16,11 +17,11 @@ class DepositForm extends React.Component {
         amount: '',
         percent: ''
       } : {
-        bank: props.bank,
-        date_start: Date.parse(props.date_start),
-        date_end: Date.parse(props.date_end),
-        amount: Number.parseFloat(props.amount),
-        percent: Number.parseFloat(props.percent)
+        bank: props.deposit.bank,
+        date_start: new Date(props.deposit.date_start),
+        date_end: new Date(props.deposit.date_end),
+        amount: Number.parseFloat(props.deposit.amount),
+        percent: Number.parseFloat(props.deposit.percent)
       }
     }
   }
@@ -41,7 +42,19 @@ class DepositForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    $.post(this.props.url, {deposit: this.state}, (data) => {window.location = this.props.url} )
+    if (this.state.edit) {
+      $.ajax({
+        url: this.props.post_url,
+        method: 'PUT',
+        data: {deposit: this.state.deposit},
+        success: (data) => {
+          window.location = this.props.post_url;
+        }
+      })
+    }
+    else {
+      $.post(this.props.post_url, {deposit: this.state}, (data) => {window.location = this.props.post_url} )
+    }
   }
 
   validDates = (date1, date2) => {
@@ -95,7 +108,7 @@ class DepositForm extends React.Component {
             <input type="text" className="form-control" name="percent" placeholder="Percent" value={this.state.deposit.percent} onChange={this.handleChange} />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">Create Deposit</button>
+        <button type="submit" className="btn btn-primary">{this.state.edit ? "Update Deposit" : "Create Deposit"}</button>
       </form>
     );
   }

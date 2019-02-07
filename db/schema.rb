@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2019_02_05_063935) do
   create_table "deposits", force: :cascade do |t|
     t.string "bank"
     t.date "date_start"
-    t.string "date_end"
+    t.date "date_end"
     t.decimal "amount"
     t.decimal "percent"
     t.datetime "created_at", null: false
