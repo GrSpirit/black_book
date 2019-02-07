@@ -6,17 +6,10 @@ import update from 'immutability-helper'
 class DepositForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.deposit.date_start);
     this.state = {
-      id: props.deposit.id,
       edit: props.edit == true,
-      deposit: props.deposit == null ? {
-        bank: '',
-        date_start: new Date(),
-        date_end: new Date(),
-        amount: '',
-        percent: ''
-      } : {
+      post_url: props.post_url,
+      deposit: {
         bank: props.deposit.bank,
         date_start: new Date(props.deposit.date_start),
         date_end: new Date(props.deposit.date_end),
@@ -26,9 +19,21 @@ class DepositForm extends React.Component {
     }
   }
 
+  static defaultProps = {
+    edit: false,
+    post_url: '#',
+    deposit: {
+      bank: '',
+      date_start: String(new Date()),
+      date_end: String(new Date()),
+      amount: '0',
+      percent: '0'
+    }
+  }
+
   static propTypes = {
-    deposit: PropTypes.any,
-    url: PropTypes.string
+    deposit: PropTypes.object,
+    post_url: PropTypes.string
   }
 
   handleChange = (e) => {
