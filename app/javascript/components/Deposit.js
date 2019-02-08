@@ -1,20 +1,23 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const Field = (props) => {
+    const {field, name} = props;
+    return (
+        <div className="form-group row">
+          <label className="field col-sm-2 font-weight-bold">{name}</label>
+          <div className="col-sm-6">{field instanceof Date ? field.toLocaleString('ru', {year: 'numeric', month: 'numeric', day: 'numeric'}) : field}</div>
+        </div>
+      );
+}
+
 class Deposit extends React.Component {
   constructor(props) {
     super(props);
     console.log(props.deposit.date_start);
+    console.log(typeof props.deposit.date_start);
     this.state = {
-      id: props.deposit.id,
-      edit: props.edit == true,
-      deposit: props.deposit == null ? {
-        bank: '',
-        date_start: new Date(),
-        date_end: new Date(),
-        amount: '',
-        percent: ''
-      } : {
+      deposit: {
         bank: props.deposit.bank,
         date_start: new Date(props.deposit.date_start),
         date_end: new Date(props.deposit.date_end),
@@ -24,48 +27,36 @@ class Deposit extends React.Component {
     }
   }
 
-  static propTypes = {
-    deposit: PropTypes.any,
-    url: PropTypes.string
+  static defaultProps = {
+    edit: false,
+    post_url: '#',
+    deposit: {
+      bank: '',
+      date_start: String(new Date()),
+      date_end: String(new Date()),
+      amount: '0',
+      percent: '0'
+    }
   }
 
+  static propTypes = {
+    deposit: PropTypes.object,
+    post_url: PropTypes.string
+  }
+
+
   render () {
-    console.log(this.state.date_start);
+    console.log(this.state.deposit);
     return (
       <div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_bank">Bank</label>
-          <div className="col-sm-6">{this.state.deposit.bank}</div>
-        </div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_date_start">Date start</label>
-          <div className="col-sm-10">{this.props.deposit.date_start}</div>
-        </div>
+        <Field field={this.state.deposit.bank} name="Bank" />
+        <Field field={this.state.deposit.date_start} name="Date start" />
+        <Field field={this.state.deposit.date_end} name="Date end" />
+        <Field field={this.state.deposit.amount} name="Amount" />
+        <Field field={this.state.deposit.percent} name="Percent" />
       </div>
     );
   }
 }
-
-        /*
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_bank">Bank</label>
-          <div className="col-sm-6">{this.state.deposit.bank}</div>
-        </div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_date_start">Date start</label>
-          <div className="col-sm-10">{this.state.deposit.date_start}</div>
-        </div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_date_end">Date end</label>
-          <div className="col-sm-10">{this.state.deposit.date_end}</div>
-        </div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_amount">Amount</label>
-          <div className="col-sm-4">{this.state.deposit.amount}</div>
-        </div>
-        <div className="form-group row">
-          <label className="field col-form-label col-sm-2" htmlFor="deposit_percent">Percent</label>
-          <div className="col-sm-4">{this.state.deposit.percent}</div>
-        </div>*/
 
 export default Deposit
