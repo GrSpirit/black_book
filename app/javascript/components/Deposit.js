@@ -2,11 +2,21 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const Field = (props) => {
-    const {field, name} = props;
+    String.prototype.toFieldName = function() {
+      return s.toLowerCase().replace(' ', '_')
+    }
+    const {edit, field, name, description, onChange} = props;
+    let fieldElement;
+    if (edit) {
+      fieldElement = field instanceof Date ? field.toLocaleString('ru', {year: 'numeric', month: 'numeric', day: 'numeric'}) : field;
+    }
+    else {
+      fieldElement = <input type="text" className="form-control" name={name.toFieldName()} placeholder={description} value={field} onChange={onChange} />;
+    }
     return (
         <div className="form-group row">
           <label className="field col-sm-2 font-weight-bold">{name}</label>
-          <div className="col-sm-6">{field instanceof Date ? field.toLocaleString('ru', {year: 'numeric', month: 'numeric', day: 'numeric'}) : field}</div>
+          <div className="col-sm-6">{fieldElement}</div>
         </div>
       );
 }
@@ -17,6 +27,7 @@ class Deposit extends React.Component {
     console.log(props.deposit.date_start);
     console.log(typeof props.deposit.date_start);
     this.state = {
+      edit: props.edit,
       deposit: {
         bank: props.deposit.bank,
         date_start: new Date(props.deposit.date_start),
@@ -44,16 +55,25 @@ class Deposit extends React.Component {
     post_url: PropTypes.string
   }
 
+  handleChange = (e) => {
+    e.preventDefault()
+    const {name, value} = e.target;
+    let deposit = this.state.deposit;
+    deposit[name] = value;
+    console.log(name, value, deposit);
+
+    this.setState({deposit: deposit})
+  }
 
   render () {
     console.log(this.state.deposit);
     return (
       <div>
-        <Field field={this.state.deposit.bank} name="Bank" />
-        <Field field={this.state.deposit.date_start} name="Date start" />
-        <Field field={this.state.deposit.date_end} name="Date end" />
-        <Field field={this.state.deposit.amount} name="Amount" />
-        <Field field={this.state.deposit.percent} name="Percent" />
+        <Field field={this.state.deposit.bank} name="Bank" edit={this.state.edit} onChange={this.handleChange} />
+        <Field field={this.state.deposit.date_start} name="Date start" edit={this.state.edit} onChange={this.handleChange} />
+        <Field field={this.state.deposit.date_end} name="Date end" edit={this.state.edit} onChange={this.handleChange} />
+        <Field field={this.state.deposit.amount} name="Amount" edit={this.state.edit} onChange={this.handleChange} />
+        <Field field={this.state.deposit.percent} name="Percent" edit={this.state.edit} onChange={this.handleChange} />
       </div>
     );
   }
