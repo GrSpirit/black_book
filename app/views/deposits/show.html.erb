@@ -2,30 +2,48 @@
 
 <%= react_component "Deposit", {deposit: @deposit} %>
 
-<p>
-  <strong>Bank:</strong>
-  <%= @deposit.bank %>
-</p>
+<div class="row">
+  <label class="col-sm-2"><strong>Bank</strong></label>
+  <div class="col-sm-6">
+    <%= @deposit.bank %>
+  </div>
+</div>
 
-<p>
-  <strong>Date start:</strong>
+<div class="row">
+  <label class="col-sm-2">
+    <strong>Date start</strong>
+  </label>
+  <div class="col-sm-6">
   <%= @deposit.date_start %>
-</p>
+  </div>
+</div>
 
-<p>
-  <strong>Date end:</strong>
+<div class="row">
+  <label class="col-sm-2">
+    <strong>Date end</strong>
+  </label>
+  <div class="col-sm-6">
   <%= @deposit.date_end %>
-</p>
+  </div>
+</div>
 
-<p>
-  <strong>Amount:</strong>
+<div class="row">
+  <label class="col-sm-2">
+    <strong>Amount</strong>
+  </label>
+  <div class="col-sm-6">
   <%= @deposit.amount %>
-</p>
+  </div>
+</div>
 
-<p>
-  <strong>Percent:</strong>
+<div class="row">
+  <label class="col-sm-2">
+    <strong>Percent</strong>
+  </label>
+  <div class="col-sm-6">
   <%= @deposit.percent %>
-</p>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_deposit_path(@deposit) %> |
 <%= link_to 'Back', deposits_path %>
