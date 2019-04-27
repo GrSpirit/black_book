@@ -58,7 +58,7 @@ class DepositForm extends React.Component {
       })
     }
     else {
-      $.post(this.props.post_url, {deposit: this.state}, (data) => {window.location = this.props.post_url} )
+      $.post(this.props.post_url, {deposit: this.state.deposit}, (data) => {window.location = this.props.post_url} )
     }
   }
 
