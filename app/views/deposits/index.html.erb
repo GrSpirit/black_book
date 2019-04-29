@@ -22,9 +22,9 @@
         <td><%= deposit.date_end %></td>
         <td><%= deposit.amount %></td>
         <td><%= deposit.percent %></td>
-        <td><%= link_to 'Show', deposit, class: "badge badge-info text-white" %></td>
-        <td><%= link_to 'Edit', edit_deposit_path(deposit), class: "badge badge-secondary text-white" %></td>
-        <td><%= link_to 'Destroy', deposit, method: :delete, data: { confirm: 'Are you sure?' }, class: "badge badge-danger text-white" %></td>
+        <td><%= link_to 'Show', deposit, class: "badge badge-pill badge-info text-white" %></td>
+        <td><%= link_to 'Edit', edit_deposit_path(deposit), class: "badge badge-pill badge-secondary text-white" %></td>
+        <td><%= link_to 'Destroy', deposit, method: :delete, data: { confirm: 'Are you sure?' }, class: "badge badge-pill badge-danger text-white" %></td>
       </tr>
     <% end %>
   </tbody>
