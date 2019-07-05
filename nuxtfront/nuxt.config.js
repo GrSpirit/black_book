@@ -50,6 +50,9 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    host: 'localhost',
+    port: 8080,
+    prefix: '/api'
   },
   /*
   ** vuetify module configuration
