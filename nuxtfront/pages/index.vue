@@ -1,6 +1,6 @@
 <template lang="pug">
 v-layout
-  v-flex(xs12 sm8 md6)
+  v-flex(xs12 sm8 md10)
     v-toolbar(flat color="white")
       v-toolbar-title Deposits
       v-divider(class="mx-2" inset vertical)
@@ -85,8 +85,8 @@ export default {
     'date-select': DateSelect
   },
   methods: {
-    updateDeposits() {
-      this.deposits = [
+    async loadDeposits() {
+      /*this.deposits = [
       {
         bank: 'Tink',
         date_start: '2019-09-01',
@@ -100,7 +100,8 @@ export default {
         date_end: '2019-06-02',
         amount: 200,
         percent: 7.3
-      }] 
+      }]*/
+      this.deposits = await this.$axios.$get('/deposits')
     },
 
     editDeposit(deposit) {
@@ -110,8 +111,7 @@ export default {
     },
 
     deleteDeposit(deposit) {
-      const index = this.deposits.indexOf(deposit)
-      confirm('Are you sure want to delete this item?') && this.deposits.splice(index, 1)
+      confirm('Are you sure want to delete this item?') && this.destroyDeposit(deposit)
     },
 
     close() {
@@ -124,16 +124,32 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.deposits[this.editedIndex], this.editedDeposit)
+        this.updateDeposit(this.editedDeposit)
       }
       else {
-        this.deposits.push(this.editedDeposit)
+        this.createDeposit(this.editedDeposit)
       }
       this.close()
+    },
+
+    async createDeposit(deposit) {
+      const newDeposit = await this.$axios.$post('/deposits', deposit)
+      this.deposits.push(newDeposit)
+    },
+
+    async updateDeposit(deposit) {
+      const newDeposit = await this.$axios.$patch(`/deposits/${deposit.id}`, deposit)
+      Object.assign(this.deposits[this.editedIndex], newDeposit)
+    },
+
+    async destroyDeposit(deposit) {
+      await this.$axios.$delete(`/deposits/${deposit.id}`)
+      const index = this.deposits.indexOf(deposit)
+      this.deposits.splice(index, 1)
     }
   },
   mounted() {
-    this.updateDeposits()
+    this.loadDeposits()
   }
 }
 </script>
