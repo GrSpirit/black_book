@@ -17,15 +17,15 @@ v-layout
             v-container(grid-list-md)
               v-layout(wrap)
                 v-flex(xs12 sm6 md4)
-                  v-text-field(v-model="editedDeposit.bank" label="Bank name")
+                  v-text-field(v-model="editedDeposit.bank" label="Bank name" :error-messages="editedDepositError.bank")
                 v-flex(xs12 sm6 md4)
-                  v-text-field(v-model="editedDeposit.amount" label="Amount")
+                  v-text-field(v-model="editedDeposit.amount" label="Amount" :error-messages="editedDepositError.amount")
                 v-flex(xs12 sm6 md4)
-                  v-text-field(v-model="editedDeposit.percent" label="Percent")
+                  v-text-field(v-model="editedDeposit.percent" label="Percent" :error-messages="editedDepositError.percent")
                 v-flex(xs12 sm6 md4)
-                  date-select(v-model="editedDeposit.date_start" label="Date start")
+                  date-select(v-model="editedDeposit.date_start" label="Date start" :error-messages="editedDepositError.date_start")
                 v-flex(xs12 sm6 md4)
-                  date-select(v-model="editedDeposit.date_end" label="Date end")
+                  date-select(v-model="editedDeposit.date_end" label="Date end" :error-messages="editedDepositError.date_end")
           v-card-actions
             v-spacer
             v-btn(color="blue darken-1" flat @click="close") Cancel
@@ -66,9 +66,11 @@ export default {
       deposits: [],
       editedIndex: -1,
       editedDeposit: { bank: '', amount: 0, percent: 0.0, date_start: '', date_end: '' },
+      editedDepositError: { bank: [], amount: [], percent: [], date_start: [], date_end: [] },
+      defaultDepositError: { bank: [], amount: [], percent: [], date_start: [], date_end: [] },
       defaultDeposit: { bank: '', amount: 0, percent: 0.0, date_start: '', date_end: '' },
       menuDateStart: false,
-      dateStartFormatted: '2019-09-01'
+      dateStartFormatted: '2019-09-01',
     }
   },
   computed: {
@@ -119,27 +121,50 @@ export default {
       setTimeout(() => {
         this.editedDeposit = Object.assign({}, this.defaultDeposit)
         this.editedIndex = -1
+        this.editedDepositError = Object.assign({}, this.defaultDepositError)
       }, 300)
     },
 
     save() {
       if (this.editedIndex > -1) {
         this.updateDeposit(this.editedDeposit)
+          .then(newDeposit => {
+            Object.assign(this.deposits[this.editedIndex], newDeposit)
+            this.close()
+          })
+          .catch(err => {
+            const error_data = err.response.data
+            this.editedDepositError.bank = error_data.bank ? [error_data.bank] : []
+            this.editedDepositError.amount = error_data.amount ? [error_data.amount] : []
+            this.editedDepositError.percent = error_data.percent ? [error_data.percent] : []
+            this.editedDepositError.date_end = error_data.date_start ? [error_data.date_start] : []
+            this.editedDepositError.date_end = error_data.date_end ? [error_data.date_end] : []
+          })
+        
       }
       else {
         this.createDeposit(this.editedDeposit)
+          .then(newDeposit => {
+            this.deposits.push(newDeposit)
+            this.close()
+          })
+          .catch(err => {
+            const error_data = err.response.data
+            this.editedDepositError.bank = error_data.bank ? [error_data.bank] : []
+            this.editedDepositError.amount = error_data.amount ? [error_data.amount] : []
+            this.editedDepositError.percent = error_data.percent ? [error_data.percent] : []
+            this.editedDepositError.date_end = error_data.date_start ? [error_data.date_start] : []
+            this.editedDepositError.date_end = error_data.date_end ? [error_data.date_end] : []
+          })
       }
-      this.close()
     },
 
     async createDeposit(deposit) {
-      const newDeposit = await this.$axios.$post('/deposits', deposit)
-      this.deposits.push(newDeposit)
+        return await this.$axios.$post('/deposits', deposit)
     },
 
     async updateDeposit(deposit) {
-      const newDeposit = await this.$axios.$patch(`/deposits/${deposit.id}`, deposit)
-      Object.assign(this.deposits[this.editedIndex], newDeposit)
+      return await this.$axios.$patch(`/deposits/${deposit.id}`, deposit)
     },
 
     async destroyDeposit(deposit) {

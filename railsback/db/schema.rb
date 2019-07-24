@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_092112) do
+ActiveRecord::Schema.define(version: 2019_07_09_175901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "deposits", force: :cascade do |t|
-    t.string "bank"
-    t.date "date_start"
-    t.date "date_end"
-    t.decimal "amount"
-    t.decimal "percent"
+    t.string "bank", null: false
+    t.date "date_start", null: false
+    t.date "date_end", null: false
+    t.decimal "amount", null: false
+    t.decimal "percent", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
