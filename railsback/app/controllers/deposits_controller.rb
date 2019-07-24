@@ -27,7 +27,9 @@ class DepositsController < ApplicationController
   def update
     respond_to do |format|
       if @deposit.update(deposit_params)
-        format.json { render json: @deposit }
+        format.json { render json: @deposit, status: :created }
+      else
+        format.json { render json: @deposit.errors, status: :unprocessable_entity }
       end
     end
   end

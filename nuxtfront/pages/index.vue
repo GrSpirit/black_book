@@ -64,13 +64,17 @@ export default {
       ],
 
       deposits: [],
+
       editedIndex: -1,
       editedDeposit: { bank: '', amount: 0, percent: 0.0, date_start: '', date_end: '' },
       editedDepositError: { bank: [], amount: [], percent: [], date_start: [], date_end: [] },
       defaultDepositError: { bank: [], amount: [], percent: [], date_start: [], date_end: [] },
       defaultDeposit: { bank: '', amount: 0, percent: 0.0, date_start: '', date_end: '' },
-      menuDateStart: false,
-      dateStartFormatted: '2019-09-01',
+
+      rules: {
+        required: value => !!value || 'Required',
+        positive: value => /^\d+(\.\d+)?$/.test(value) && 'Not number'
+      }
     }
   },
   computed: {
@@ -88,21 +92,6 @@ export default {
   },
   methods: {
     async loadDeposits() {
-      /*this.deposits = [
-      {
-        bank: 'Tink',
-        date_start: '2019-09-01',
-        date_end: '2019-09-02',
-        amount: 1000,
-        percent: 6.9
-      },
-      {
-        bank: 'Pochta',
-        date_start: '2019-06-01',
-        date_end: '2019-06-02',
-        amount: 200,
-        percent: 7.3
-      }]*/
       this.deposits = await this.$axios.$get('/deposits')
     },
 
@@ -132,14 +121,7 @@ export default {
             Object.assign(this.deposits[this.editedIndex], newDeposit)
             this.close()
           })
-          .catch(err => {
-            const error_data = err.response.data
-            this.editedDepositError.bank = error_data.bank ? [error_data.bank] : []
-            this.editedDepositError.amount = error_data.amount ? [error_data.amount] : []
-            this.editedDepositError.percent = error_data.percent ? [error_data.percent] : []
-            this.editedDepositError.date_end = error_data.date_start ? [error_data.date_start] : []
-            this.editedDepositError.date_end = error_data.date_end ? [error_data.date_end] : []
-          })
+          .catch(this.handleError)
         
       }
       else {
@@ -148,15 +130,17 @@ export default {
             this.deposits.push(newDeposit)
             this.close()
           })
-          .catch(err => {
-            const error_data = err.response.data
-            this.editedDepositError.bank = error_data.bank ? [error_data.bank] : []
-            this.editedDepositError.amount = error_data.amount ? [error_data.amount] : []
-            this.editedDepositError.percent = error_data.percent ? [error_data.percent] : []
-            this.editedDepositError.date_end = error_data.date_start ? [error_data.date_start] : []
-            this.editedDepositError.date_end = error_data.date_end ? [error_data.date_end] : []
-          })
+          .catch(this.handleError)
       }
+    },
+
+    handleError(err) {
+      const error_data = err.response.data
+      this.editedDepositError.bank = !!error_data.bank ? [] : [error_data.bank]
+      this.editedDepositError.amount = !!error_data.amount ? [] : [error_data.amount] 
+      this.editedDepositError.percent = !!error_data.percent ? [] : [error_data.percent] 
+      this.editedDepositError.date_start = !!error_data.date_start ? [] : [error_data.date_start] 
+      this.editedDepositError.date_end = !!error_data.date_end ? [] : [error_data.date_end]
     },
 
     async createDeposit(deposit) {
