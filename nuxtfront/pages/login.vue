@@ -1,19 +1,19 @@
 <template lang="pug">
-v-layout
+v-layout(row wrap align="center")
   v-flex
-    v-card(v-if="$auth.loggedIn")
+    v-card(v-if="$auth.loggedIn" max-width="500")
       v-alert(type="error" :value="error") {{error}}
       v-card-text Logged in as {{$auth.$state.user.email}}
       v-card-actions
-        v-btn(@click="logout") Log out
-    v-card(v-else)
+        v-btn(@click="logout" default) Log out
+    v-card(v-else max-width="500")
       v-alert(type="error" :value="error") {{error}}
       v-card-text
-        v-form
+        v-form(id="login-form" @submit.prevent="login")
           v-text-field(v-model="email" label="Email")
           v-text-field(v-model="password" label="Password" type="password")
         v-card-actions
-          v-btn(@click="login") Log in
+          v-btn(type="submit" form="login-form") Log in
 </template>
 <script>
 export default {
