@@ -47,6 +47,7 @@ v-layout
 import DateSelect from '~/components/DateSelect.vue';
 
 export default {
+  middleware: ['auth'],
   data() {
     return {
       dialog: false,

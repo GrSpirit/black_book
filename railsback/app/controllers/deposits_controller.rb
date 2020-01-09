@@ -1,5 +1,6 @@
 class DepositsController < ApplicationController
   before_action :set_deposit, only: [:update, :destroy]
+  before_action :authenticate_user!
 
   # GET /deposits
   def index

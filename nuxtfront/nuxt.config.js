@@ -44,6 +44,7 @@ export default {
     '@nuxtjs/vuetify',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
@@ -53,6 +54,17 @@ export default {
     host: 'localhost',
     port: 5000,
     prefix: '/api'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login:  { url: '/users/sign_in' },
+          logout: { url: '/users/sign_out', method: 'delete' },
+          user:   { url: '/users/current' }
+        }
+      }
+    }
   },
   /*
   ** vuetify module configuration
