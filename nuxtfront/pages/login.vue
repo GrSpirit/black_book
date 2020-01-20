@@ -1,6 +1,6 @@
 <template lang="pug">
-v-layout(row wrap align="center")
-  v-flex
+v-layout
+  v-flex(d-flex justify-center)
     v-card(v-if="$auth.loggedIn" max-width="500")
       v-alert(type="error" :value="error") {{error}}
       v-card-text Logged in as {{$auth.$state.user.email}}
