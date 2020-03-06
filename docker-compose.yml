@@ -1,0 +1,19 @@
+version: "3"
+services:
+    back:
+        build: ./railsback
+        env_file:
+            - ./secrets.env
+        environment:
+            - RAILS_ENV=development
+        depends_on:
+            - db
+    front:
+        build: ./nuxtfront
+        ports:
+            - "80:3000"
+    db:
+        image: postgres:12
+        restart: always
+        env_file:
+            - ./secrets.env

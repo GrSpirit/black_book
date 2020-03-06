@@ -11,7 +11,7 @@ default: &default
   timeout: 5000
   host: db
   username: postgres
-  password:
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
 
 development:
   <<: *default

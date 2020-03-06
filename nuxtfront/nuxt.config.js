@@ -51,8 +51,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    host: 'localhost',
-    port: 5000,
+    host: 'back',
+    port: 3000,
     prefix: '/api'
   },
   auth: {
