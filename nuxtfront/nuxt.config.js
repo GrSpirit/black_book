@@ -47,11 +47,17 @@ export default {
     '@nuxtjs/auth'
   ],
   /*
+  ** Environment variables
+  */
+  env: {
+    baseUrl: process.env.BASE_URL || 'localhost'
+  },
+  /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    host: 'localhost',
+    host: process.env.baseUrl,
     port: 5000,
     prefix: '/api'
   },
