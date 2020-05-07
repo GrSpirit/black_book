@@ -50,14 +50,14 @@ export default {
   ** Environment variables
   */
   env: {
-    baseUrl: process.env.BASE_URL || 'localhost'
+    baseAddr: process.env.BASE_ADDR || 'localhost'
   },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    host: process.env.baseUrl,
+    host: 'localhost',
     port: 5000,
     prefix: '/api'
   },

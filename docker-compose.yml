@@ -2,18 +2,31 @@ version: "3"
 services:
     back:
         build: ./railsback
+        restart: always
+        ports:
+            - "5000:3000"
         env_file:
             - ./secrets.env
         environment:
-            - RAILS_ENV=development
+            - RAILS_ENV=production
+            - FRONT_ADDR=130.61.89.193
         depends_on:
             - db
     front:
         build: ./nuxtfront
+        restart: always
         ports:
             - "80:3000"
+        environment:
+            - API_URL=http://130.61.89.193:5000/api
+            - NODE_ENV=production
+            - NODE_CONFIG_PRODUCTION=false
     db:
         image: postgres:12
         restart: always
         env_file:
             - ./secrets.env
+        volumes:
+            - "black_book_data:/var/lib/postgresql/data"
+volumes:
+    black_book_data:
