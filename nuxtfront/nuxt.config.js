@@ -57,10 +57,12 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    host: 'localhost',
-    port: 5000,
-    prefix: '/api'
+    prefix: '/api',
+    proxy: true
   },
+  proxy: [
+    process.env.API_URL || 'http://localhost:5000/api/'
+  ],
   auth: {
     strategies: {
       local: {

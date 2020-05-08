@@ -3,13 +3,11 @@ services:
     back:
         build: ./railsback
         restart: always
-        ports:
-            - "5000:3000"
         env_file:
             - ./secrets.env
         environment:
             - RAILS_ENV=production
-            - FRONT_ADDR=130.61.89.193
+            - FRONT_ADDR=front
         depends_on:
             - db
     front:
@@ -18,7 +16,7 @@ services:
         ports:
             - "80:3000"
         environment:
-            - API_URL=http://130.61.89.193:5000/api
+            - API_URL=http://back:3000/api/
             - NODE_ENV=production
             - NODE_CONFIG_PRODUCTION=false
     db:
