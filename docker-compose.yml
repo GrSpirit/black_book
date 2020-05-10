@@ -14,7 +14,7 @@ services:
         build: ./nuxtfront
         restart: always
         ports:
-            - "80:3000"
+            - "443:3000"
         environment:
             - API_URL=http://back:3000/api/
             - NODE_ENV=production

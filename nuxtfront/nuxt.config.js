@@ -1,4 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
+import path from 'path'
+import fs from 'fs'
 
 export default {
   mode: 'universal',
@@ -97,6 +99,15 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+    }
+  },
+  /*
+  ** HTTPS
+  */
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname + '/ssh/', 'server.key')),
+      cert: fs.readFileSync(path.resolve(__dirname + '/ssh/', 'server.crt'))
     }
   }
 }
