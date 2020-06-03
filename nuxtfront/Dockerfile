@@ -17,7 +17,7 @@ USER $APP_USER
 
 RUN yarn install --network-timeout 600000
 
-COPY . .
+COPY --chown=$APP_USER:$APP_USER . .
 RUN yarn build
 
 EXPOSE 3000
