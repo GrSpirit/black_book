@@ -74,5 +74,6 @@ test:
 #
 production:
   <<: *default
-  database: black_book_production
-  password: <%= ENV['RAILSBACK_DATABASE_PASSWORD'] %>
+  #host: <%= ENV.fetch('POSTGRES_HOST') { 'localhost' } %>
+  url: <%= ENV['DATABASE_URL'] %>
+  #database: black_book_production

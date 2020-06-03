@@ -8,6 +8,7 @@ services:
         environment:
             - RAILS_ENV=production
             - FRONT_ADDR=front
+            - DATABASE_URL=postgres://postgres@db/black_book_production
         depends_on:
             - db
     front:
