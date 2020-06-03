@@ -187,7 +187,6 @@ DEPENDENCIES
   byebug
   devise (~> 4.7.0)
   devise-jwt (~> 0.6.0)
-  dry-configurable (= 0.9.0)
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
