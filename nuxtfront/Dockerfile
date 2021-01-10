@@ -1,4 +1,4 @@
-FROM node:13
+FROM node:15
 MAINTAINER grspirit
 
 ENV APP_USER app
