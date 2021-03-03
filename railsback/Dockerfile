@@ -1,14 +1,14 @@
-FROM ruby:2.7.2
+FROM ruby:3.0-alpine
 
-RUN apt-get update -qq && apt-get install -y postgresql-client
+RUN apk --update add gcc musl-dev make tzdata postgresql-dev postgresql-client
 
 ENV APP_USER app
 ENV APP_USER_HOME /home/$APP_USER
 ENV APP_HOME /usr/src/app
 
-RUN useradd -m -d $APP_USER_HOME $APP_USER
+RUN addgroup -S $APP_USER && adduser -h $APP_USER_HOME -S $APP_USER -G $APP_USER
 
-#RUN mkdir /var/www && chown -R $APP_USER:$APP_USER /var/www
+RUN mkdir /var/www && chown -R $APP_USER:$APP_USER /var/www
 
 WORKDIR $APP_HOME
 USER $APP_USER

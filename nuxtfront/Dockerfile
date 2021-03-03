@@ -1,11 +1,13 @@
-FROM node:15
+FROM node:15-alpine
 MAINTAINER grspirit
+
+RUN apk --update add python2 make gcc g++
 
 ENV APP_USER app
 ENV APP_USER_HOME /home/$APP_USER
 ENV APP_HOME /usr/src/app
 
-RUN useradd -m -d $APP_USER_HOME $APP_USER
+RUN addgroup -S $APP_USER && adduser -h $APP_USER_HOME -S $APP_USER -G $APP_USER
 
 WORKDIR $APP_HOME
 
